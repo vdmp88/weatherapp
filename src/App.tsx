@@ -1,19 +1,31 @@
-import React, { useEffect } from 'react';
-import { useGetCitiesQuery } from './services/CitiesService';
-import './main.scss';
+import React from 'react';
 import { CitiesList } from './components/CitiesList/CitiesList';
+import { Navigation } from './components/ Navigation/Navigation';
+import { useGetCitiesQuery } from './services/CitiesService';
+import { useAppSelector } from './hooks/redux';
+import './main.scss';
 
 function App() {
-  const { data: response, isError, isLoading } = useGetCitiesQuery('');
-
-  useEffect(() => {
-    console.log('test', response);
-  }, [response]);
+  const { offset, limit, countryIds } = useAppSelector(
+    (state) => state.citiesPaginationReducer,
+  );
+  const { data, isLoading, error } = useGetCitiesQuery(
+    offset,
+    limit,
+    countryIds,
+  );
+  const onSuccess = !isLoading && !error && data;
 
   return (
     <div className="App">
       <div className="container">
-        <CitiesList />
+        {error && "Something's wrong"}
+        {onSuccess && (
+          <>
+            <CitiesList />
+            <Navigation />
+          </>
+        )}
       </div>
     </div>
   );

@@ -1,12 +1,14 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import userReducer from './reducers/UserSlice';
 import { weatherAPI } from '../services/WeatherService';
 import { citiesAPI } from '../services/CitiesService';
+import citiesPaginationReducer from './reducers/CitiesPagination';
+import { testingAPI } from '../services/ServiceForTesting';
 
 const rootReducer = combineReducers({
-  userReducer,
+  citiesPaginationReducer,
   [weatherAPI.reducerPath]: weatherAPI.reducer,
   [citiesAPI.reducerPath]: citiesAPI.reducer,
+  [testingAPI.reducerPath]: testingAPI.reducer,
 });
 
 export const setupStore = () =>
