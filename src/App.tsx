@@ -1,4 +1,5 @@
 import React from 'react';
+import { Box, CircularProgress } from '@mui/material';
 import { CitiesList } from './components/CitiesList/CitiesList';
 import { Navigation } from './components/ Navigation/Navigation';
 import { useGetCitiesQuery } from './services/CitiesService';
@@ -9,18 +10,29 @@ function App() {
   const { offset, limit, countryIds } = useAppSelector(
     (state) => state.citiesPaginationReducer,
   );
-  const { data, isLoading, error } = useGetCitiesQuery(
+  const { data, isLoading, error } = useGetCitiesQuery({
     offset,
     limit,
     countryIds,
-  );
-  const onSuccess = !isLoading && !error && data;
+  });
 
   return (
     <div className="App">
       <div className="container">
+        {isLoading && (
+          <Box
+            sx={{
+              display: 'flex',
+              minHeight: '100vh',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        )}
         {error && "Something's wrong"}
-        {onSuccess && (
+        {data && (
           <>
             <CitiesList />
             <Navigation />

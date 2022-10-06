@@ -1,58 +1,33 @@
 import React from 'react';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 import { useAppSelector, useAppDispatch } from '../../hooks/redux';
 import { useGetCitiesQuery } from '../../services/CitiesService';
-import {
-  setNext,
-  setPrevious,
-  setPage,
-} from '../../store/reducers/CitiesPagination';
+import { setOffset } from '../../store/reducers/CitiesPagination';
 
 export const Navigation: React.FC = () => {
+  const dispatch = useAppDispatch();
   const { offset, limit, countryIds } = useAppSelector(
     (state) => state.citiesPaginationReducer,
   );
-  const { data: cities } = useGetCitiesQuery(offset, limit, countryIds);
-  const currentOffset = cities?.metadata?.currentOffset;
-  const totalPostsCount = cities?.metadata?.totalCount;
-  const currentPostsCount = currentOffset + 1;
-  const test = currentOffset + cities.data.length;
-  const lastPage = Math.floor(totalPostsCount / 10) * 10;
-  const itLastPage = totalPostsCount === test;
-  const dispatch = useAppDispatch();
+  const { data: cities } = useGetCitiesQuery({ offset, limit, countryIds });
+  const totalPostsCount = cities?.metadata?.totalCount ?? 0;
+  const lastPage = Math.floor(totalPostsCount / 10);
 
-  console.log(test, totalPostsCount);
-  console.log('leng', cities.data.length);
+  const handleChange = (event: React.ChangeEvent<unknown>, page: number) => {
+    dispatch(setOffset((page - 1) * limit));
+  };
 
   return (
-    <>
-      <div>{`Showing ${currentPostsCount} to ${test} of ${totalPostsCount} cities`}</div>
-      <button
-        disabled={!offset}
-        type="button"
-        onClick={() => {
-          dispatch(setPrevious(10));
-        }}
-      >
-        prev
-      </button>
-      <button
-        disabled={itLastPage}
-        type="button"
-        onClick={() => {
-          dispatch(setNext(10));
-        }}
-      >
-        next
-      </button>
-      <button
-        disabled={itLastPage}
-        type="button"
-        onClick={() => {
-          dispatch(setPage(lastPage));
-        }}
-      >
-        last
-      </button>
-    </>
+    <Stack className="navigation navigation--cities">
+      <Pagination
+        count={lastPage + 1}
+        siblingCount={0}
+        onChange={handleChange}
+        color="primary"
+        size="large"
+        showLastButton
+      />
+    </Stack>
   );
 };
