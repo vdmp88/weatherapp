@@ -1,28 +1,55 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { City } from '../../interfaces/city';
+import { Box, CircularProgress } from '@mui/material';
+import { useFetchDateWeatherQuery } from '../../services/WeatherService';
+import { City } from '../../types/city';
 
 type Props = {
   city: City;
 };
 
 export const CitiesCard: React.FC<Props> = ({ city }) => {
-  const { name, country, population } = city;
+  const { latitude, longitude } = city;
+  const { data, isLoading } = useFetchDateWeatherQuery(
+    { latitude, longitude },
+    {
+      skip: !city,
+    },
+  );
 
   return (
-    <Card sx={{ maxWidth: '280px', width: '24%', margin: '0 10px 10px' }}>
-      <CardContent>
-        <Typography>City name: {name} </Typography>
-        <Typography>Country: {country}</Typography>
-        <Typography>Population: {population}</Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions>
+    <Card className="card card--weather">
+      {isLoading && (
+        <Box sx={{ display: 'flex' }}>
+          <CircularProgress />
+        </Box>
+      )}
+      {data && (
+        <>
+          <CardContent style={{ padding: 0 }}>
+            <Typography className="card__title">{data?.name}</Typography>
+            <Typography className="card__description">
+              {data?.sys.country}
+            </Typography>
+            <Typography className="card__information">
+              {Math.floor(data?.main.temp)} °
+            </Typography>
+          </CardContent>
+          <CardActions
+            sx={{
+              padding: 0,
+              display: 'flex',
+              flexGrow: '1',
+            }}
+          >
+            <Button className="button button--small">Learn More</Button>
+          </CardActions>
+        </>
+      )}
     </Card>
   );
 };

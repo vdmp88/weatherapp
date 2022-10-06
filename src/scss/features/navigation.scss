@@ -1,0 +1,28 @@
+.navigation {
+  align-items: end;
+
+  .css-1oj2twp-MuiPagination-root {
+    background: $white;
+    box-shadow: 0px 4px 26px rgba(0, 0, 0, 0.16);
+    border-radius: 24px;
+    padding: 15px;
+
+    ul li button {
+      font-family: $primary-font;
+      min-width: auto;
+      height: auto;
+      padding: 5px 10px;
+      font-size: 16px;
+      margin: 0 4px;
+
+      &.css-bf9wz-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
+        border-radius: 4px;
+        background: $strong-sky;
+      }
+    }
+  }
+
+  &--cities {
+    margin-top: 24px;
+  }
+}

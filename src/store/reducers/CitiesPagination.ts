@@ -16,19 +16,11 @@ export const citiesPaginationSlice = createSlice({
   name: 'citiesPagination',
   initialState,
   reducers: {
-    setNext(state, action: PayloadAction<any>) {
-      state.offset += action.payload;
-    },
-
-    setPrevious(state, action: PayloadAction<any>) {
-      state.offset -= action.payload;
-    },
-
-    setPage(state, action: PayloadAction<any>) {
+    setOffset(state, action: PayloadAction<any>) {
       state.offset = action.payload;
     },
   },
 });
 
-export const { setNext, setPrevious, setPage } = citiesPaginationSlice.actions;
+export const { setOffset } = citiesPaginationSlice.actions;
 export default citiesPaginationSlice.reducer;

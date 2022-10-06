@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&display=swap');
+
 @import './scss/reset';
 @import './scss/variable.scss';
 @import './scss/base';
+@import './scss/list.scss';
+
+@import './scss/features/button.scss';
+@import './scss/features/card.scss';
+@import './scss/features/navigation.scss';
