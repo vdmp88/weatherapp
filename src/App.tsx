@@ -1,7 +1,9 @@
 import React from 'react';
+import { Routes, Route, Link } from 'react-router-dom';
 import { Box, CircularProgress } from '@mui/material';
-import { CitiesList } from './components/CitiesList/CitiesList';
-import { Navigation } from './components/ Navigation/Navigation';
+import { HomePage } from './components/pages/HomePage/HomePage';
+import { CityPage } from './components/pages/CityPage/CityPage';
+import { NoMatchPage } from './components/pages/NoMatchPage/NoMatchPage';
 import { useGetCitiesQuery } from './services/CitiesService';
 import { useAppSelector } from './hooks/redux';
 import './main.scss';
@@ -34,8 +36,22 @@ function App() {
         {error && "Something's wrong"}
         {data && (
           <>
-            <CitiesList />
-            <Navigation />
+            <nav>
+              <ul>
+                <li>
+                  <Link to="/weather-page">weather</Link>
+                </li>
+                <li>
+                  <Link to="/broken-page">broken</Link>
+                </li>
+              </ul>
+            </nav>
+
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/weather-page" element={<CityPage />} />
+              <Route path="*" element={<NoMatchPage />} />
+            </Routes>
           </>
         )}
       </div>

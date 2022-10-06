@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -46,7 +47,9 @@ export const CitiesCard: React.FC<Props> = ({ city }) => {
               flexGrow: '1',
             }}
           >
-            <Button className="button button--small">Learn More</Button>
+            <Button className="button button--small">
+              <Link to="/weather-page">Learn More</Link>
+            </Button>
           </CardActions>
         </>
       )}
