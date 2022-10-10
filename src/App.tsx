@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { Box, CircularProgress } from '@mui/material';
 import { HomePage } from './components/pages/HomePage/HomePage';
 import { CityPage } from './components/pages/CityPage/CityPage';
@@ -12,6 +12,7 @@ function App() {
   const { offset, limit, countryIds } = useAppSelector(
     (state) => state.citiesPaginationReducer,
   );
+
   const { data, isLoading, error } = useGetCitiesQuery({
     offset,
     limit,
@@ -35,24 +36,11 @@ function App() {
         )}
         {error && "Something's wrong"}
         {data && (
-          <>
-            <nav>
-              <ul>
-                <li>
-                  <Link to="/weather-page">weather</Link>
-                </li>
-                <li>
-                  <Link to="/broken-page">broken</Link>
-                </li>
-              </ul>
-            </nav>
-
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/weather-page" element={<CityPage />} />
-              <Route path="*" element={<NoMatchPage />} />
-            </Routes>
-          </>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/weather-page" element={<CityPage />} />
+            <Route path="*" element={<NoMatchPage />} />
+          </Routes>
         )}
       </div>
     </div>

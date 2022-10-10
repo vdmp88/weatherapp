@@ -8,6 +8,7 @@
     text-transform: unset;
     line-height: 24px;
     border: 1px solid transparent;
+    transition: all 0.7s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 
     &:hover {
       background: transparent;
@@ -18,5 +19,17 @@
 
   &.button--small {
     padding: 6px 18px;
+  }
+
+  &.button--refresh {
+    border-radius: 0;
+    background: transparent;
+    border: none;
+
+    &:hover {
+      border: none;
+      background: transparent;
+      transform: rotate(360deg);
+    }
   }
 }

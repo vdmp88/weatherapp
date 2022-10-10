@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import { Box, CircularProgress } from '@mui/material';
 import { useFetchDateWeatherQuery } from '../../services/WeatherService';
 import { City } from '../../types/city';
+import RefreshIcon from '../../assets/refresh.svg';
 
 type Props = {
   city: City;
@@ -15,7 +16,7 @@ type Props = {
 
 export const CitiesCard: React.FC<Props> = ({ city }) => {
   const { latitude, longitude } = city;
-  const { data, isLoading } = useFetchDateWeatherQuery(
+  const { data, isLoading, refetch } = useFetchDateWeatherQuery(
     { latitude, longitude },
     {
       skip: !city,
@@ -49,6 +50,9 @@ export const CitiesCard: React.FC<Props> = ({ city }) => {
           >
             <Button className="button button--small">
               <Link to="/weather-page">Learn More</Link>
+            </Button>
+            <Button className="button button--refresh" onClick={refetch}>
+              <img src={RefreshIcon} alt="refresh" />
             </Button>
           </CardActions>
         </>

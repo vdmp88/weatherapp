@@ -15,7 +15,10 @@ export const setupStore = () =>
   configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(weatherAPI.middleware),
+      getDefaultMiddleware().concat(
+        weatherAPI.middleware,
+        citiesAPI.middleware,
+      ),
   });
 
 export type RootState = ReturnType<typeof rootReducer>;

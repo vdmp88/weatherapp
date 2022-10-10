@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { useAppSelector, useAppDispatch } from '../../hooks/redux';
@@ -17,6 +17,10 @@ export const Navigation: React.FC = () => {
   const handleChange = (event: React.ChangeEvent<unknown>, page: number) => {
     dispatch(setOffset((page - 1) * limit));
   };
+
+  useEffect(() => {
+    localStorage.setItem('citiesOffset', String(offset));
+  }, [offset]);
 
   return (
     <Stack className="navigation navigation--cities">

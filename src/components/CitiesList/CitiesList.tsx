@@ -9,6 +9,7 @@ export const CitiesList = () => {
   const { offset, limit, countryIds } = useAppSelector(
     (state) => state.citiesPaginationReducer,
   );
+
   const { data: cities } = useGetCitiesQuery({ offset, limit, countryIds });
 
   return (
